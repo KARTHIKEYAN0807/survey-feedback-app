@@ -1,14 +1,20 @@
 # Survey / Feedback Application
 
-This is a full stack Survey / Feedback web application built as part of the
-Full Stack Developer Internship assignment for Dotworld Technologies Pvt Ltd.
+A full-stack web application that allows users to create surveys, participate in surveys, and view survey analytics through charts.
 
-The application allows users to create surveys, participate in surveys,
-and view survey results in the form of charts.
+---
 
-------------------------------------------------------------
+## Live Application
 
-TECH STACK
+Frontend (Netlify):  
+https://survey-feedback-app.netlify.app/
+
+Backend API (Render):  
+https://survey-feedback-app.onrender.com
+
+---
+
+## Tech Stack
 
 Frontend:
 - React (Vite)
@@ -24,74 +30,60 @@ Backend:
 Database:
 - MongoDB (MongoDB Atlas)
 
-------------------------------------------------------------
+---
 
-FEATURES
+## Features
 
-Authentication:
-- User login using JWT
-- Protected dashboard access
+- User registration and login using JWT
+- Protected routes for authenticated users
+- Create surveys with multiple-choice questions
+- Add multiple questions with custom options
+- View all available surveys
+- Fill surveys and submit responses
+- View total responses per survey
+- Visualize survey results using bar charts
 - Logout functionality
 
-Survey Management:
-- Create surveys with multiple questions and options
-- View available surveys
-- Fill surveys and submit responses
+---
 
-Analytics:
-- View total responses for each survey
-- Visualize survey results using bar charts
-
-------------------------------------------------------------
-
-PROJECT STRUCTURE
+## Project Structure
 
 survey-feedback-app/
-|
-|-- client/        (Frontend - React)
-|-- server/        (Backend - Node + Express)
-|-- README.md
+├── client/   (React frontend)
+├── server/   (Node.js backend)
+└── README.md
 
-------------------------------------------------------------
+---
 
-HOW TO RUN THE PROJECT LOCALLY
+## Run Locally
 
-1) Clone the repository
-
-git clone https://github.com/KARTHIKEYAN0807/survey-feedback-app.git
-
-
-2) Backend Setup
-
+Backend setup:
 cd server
 npm install
 
-Create a .env file inside the server folder with the following content:
-
+Create .env file in server directory:
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 
-Run the backend server:
-
+Start backend:
 node server.js
 
-Backend will run on:
+Backend runs on:
 http://localhost:5000
 
-------------------------------------------------------------
+---
 
-3) Frontend Setup
-
+Frontend setup:
 cd client
 npm install
 npm run dev
 
-Frontend will run on:
+Frontend runs on:
 http://localhost:5173
 
-------------------------------------------------------------
+---
 
-API ENDPOINTS
+## API Endpoints
 
 Authentication:
 - POST /api/auth/register
@@ -105,16 +97,16 @@ Responses:
 - POST /api/responses
 - GET /api/responses/:surveyId
 
-------------------------------------------------------------
+---
 
-NOTES
+## Deployment
 
-- This project was built manually without using AI code generation tools.
-- All functionality and logic were implemented as part of the assignment.
-- MongoDB Atlas is used for cloud database storage.
+- Frontend deployed on Netlify
+- Backend deployed on Render
+- MongoDB Atlas used for cloud database storage
 
-------------------------------------------------------------
+---
 
-AUTHOR
+## Author
 
 Karthikeyan S
