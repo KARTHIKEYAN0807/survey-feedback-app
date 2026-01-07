@@ -60,6 +60,11 @@ function Login() {
           <button className="btn btn-primary w-100">
             Login
           </button>
+
+          <p className="text-center mt-3 mb-0">
+  Don’t have an account? <a href="/register">Register</a>
+</p>
+
         </form>
       </div>
     </div>

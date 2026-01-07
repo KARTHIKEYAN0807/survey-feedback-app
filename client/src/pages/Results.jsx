@@ -20,9 +20,9 @@ ChartJS.register(
 );
 
 function Results() {
-  const { id } = useParams(); // surveyId
-  const [responses, setResponses] = useState([]);
+  const { id } = useParams();
   const [survey, setSurvey] = useState(null);
+  const [responses, setResponses] = useState([]);
 
   useEffect(() => {
     fetchSurvey();
@@ -40,37 +40,82 @@ function Results() {
     setResponses(res.data);
   };
 
-  if (!survey) return <p className="mt-5 text-center">Loading...</p>;
+  if (!survey) {
+    return (
+      <div className="container mt-5 text-center">
+        <p>Loading analytics...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-4">
-      <h3>{survey.title} - Results</h3>
-      <p>Total Responses: <b>{responses.length}</b></p>
+      <h2 className="page-title mb-4">
+        {survey.title} — Analytics
+      </h2>
 
+      {/* KPI SECTION */}
+      <div className="row mb-4">
+        <div className="col-md-4">
+          <div className="card shadow p-4 text-center">
+            <h6 className="text-muted mb-2">Total Responses</h6>
+            <h1 className="fw-bold text-success">
+              {responses.length}
+            </h1>
+          </div>
+        </div>
+      </div>
+
+      {/* CHARTS */}
       {survey.questions.map((q, index) => {
         const counts = {};
-        q.options.forEach(opt => counts[opt] = 0);
+        q.options.forEach(opt => (counts[opt] = 0));
 
         responses.forEach(r => {
-          const ans = r.answers.find(a => a.questionText === q.questionText);
+          const ans = r.answers.find(
+            a => a.questionText === q.questionText
+          );
           if (ans) counts[ans.answer]++;
         });
 
         return (
-          <div key={index} className="mb-5">
-            <h5>{q.questionText}</h5>
+          <div key={index} className="card shadow section p-4">
+            <h5 className="mb-4">
+              {index + 1}. {q.questionText}
+            </h5>
 
-            <Bar
-              data={{
-                labels: Object.keys(counts),
-                datasets: [
-                  {
-                    label: "Responses",
-                    data: Object.values(counts)
+            <div style={{ height: "300px" }}>
+              <Bar
+                data={{
+                  labels: Object.keys(counts),
+                  datasets: [
+                    {
+                      label: "Responses",
+                      data: Object.values(counts),
+                      backgroundColor: "#4f46e5"
+                    }
+                  ]
+                }}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                    legend: {
+                      display: false
+                    }
+                  },
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      grace: "20%",
+                      ticks: {
+                        precision: 0
+                      }
+                    }
                   }
-                ]
-              }}
-            />
+                }}
+              />
+            </div>
           </div>
         );
       })}

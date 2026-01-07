@@ -3,30 +3,30 @@ import { useParams, useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 function FillSurvey() {
-  const { id } = useParams(); // surveyId
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [survey, setSurvey] = useState(null);
   const [answers, setAnswers] = useState({});
 
   useEffect(() => {
-    fetchSurvey();
+    loadSurvey();
   }, []);
 
-  const fetchSurvey = async () => {
+  const loadSurvey = async () => {
     try {
-      const res = await api.get(`/surveys`);
-      const selected = res.data.find(s => s._id === id);
-      setSurvey(selected);
+      const res = await api.get("/surveys");
+      const selectedSurvey = res.data.find(s => s._id === id);
+      setSurvey(selectedSurvey);
     } catch (err) {
       console.log("Failed to load survey");
     }
   };
 
-  const handleChange = (questionText, value) => {
+  const handleAnswerChange = (question, value) => {
     setAnswers({
       ...answers,
-      [questionText]: value
+      [question]: value
     });
   };
 
@@ -42,43 +42,62 @@ function FillSurvey() {
         answers: formattedAnswers
       });
 
-      alert("Survey submitted successfully");
+      alert("Thank you for your feedback!");
       navigate("/dashboard");
     } catch (err) {
       alert("Failed to submit survey");
     }
   };
 
-  if (!survey) return <p className="text-center mt-5">Loading...</p>;
+  if (!survey) {
+    return (
+      <div className="container mt-5 text-center">
+        <p>Loading survey...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-4">
-      <h3>{survey.title}</h3>
+      <h2 className="page-title mb-4">{survey.title}</h2>
 
       {survey.questions.map((q, index) => (
-        <div key={index} className="mb-4">
-          <label className="form-label">
+        <div key={index} className="card shadow section p-4">
+          <h5 className="mb-3">
             {index + 1}. {q.questionText}
-          </label>
+          </h5>
 
           {q.options.map((opt, i) => (
-            <div className="form-check" key={i}>
+            <div className="form-check mb-2" key={i}>
               <input
                 className="form-check-input"
                 type="radio"
                 name={q.questionText}
+                id={`${q.questionText}-${i}`}
                 value={opt}
-                onChange={() => handleChange(q.questionText, opt)}
+                onChange={() =>
+                  handleAnswerChange(q.questionText, opt)
+                }
               />
-              <label className="form-check-label">{opt}</label>
+              <label
+                className="form-check-label"
+                htmlFor={`${q.questionText}-${i}`}
+              >
+                {opt}
+              </label>
             </div>
           ))}
         </div>
       ))}
 
-      <button className="btn btn-success" onClick={handleSubmit}>
-        Submit Survey
-      </button>
+      <div className="text-center mt-4">
+        <button
+          className="btn btn-primary px-5 py-2"
+          onClick={handleSubmit}
+        >
+          Submit Survey
+        </button>
+      </div>
     </div>
   );
 }

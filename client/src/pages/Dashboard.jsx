@@ -5,8 +5,6 @@ import SurveyList from "./SurveyList";
 function Dashboard() {
   return (
     <>
-      {/* Top Navigation */}
-      <Navbar />
 
       <div className="container mt-4">
         <h2 className="page-title mb-4">Dashboard</h2>
