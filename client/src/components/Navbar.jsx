@@ -19,24 +19,17 @@ function Navbar() {
         SurveyApp
       </span>
 
-      {/* Nav Links */}
       <div className="collapse navbar-collapse show">
         <ul className="navbar-nav me-auto ms-4">
           <li className="nav-item">
             <NavLink className="nav-link" to="/dashboard">
-              Dashboard
-            </NavLink>
-          </li>
-
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/dashboard">
-              Create Survey
-            </NavLink>
-          </li>
-
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/dashboard">
               Surveys
+            </NavLink>
+          </li>
+
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/create">
+              Create Survey
             </NavLink>
           </li>
         </ul>
