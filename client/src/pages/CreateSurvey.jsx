@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 function CreateSurvey() {
+  const navigate = useNavigate();
+
   const [title, setTitle] = useState("");
   const [questions, setQuestions] = useState([
     { questionText: "", options: "" }
@@ -21,7 +24,7 @@ function CreateSurvey() {
     try {
       const formattedQuestions = questions.map(q => ({
         questionText: q.questionText,
-        options: q.options.split(",")
+        options: q.options.split(",").map(opt => opt.trim())
       }));
 
       await api.post("/surveys", {
@@ -30,8 +33,13 @@ function CreateSurvey() {
       });
 
       alert("Survey created successfully");
+
+      // reset form
       setTitle("");
       setQuestions([{ questionText: "", options: "" }]);
+
+      // 👉 navigate to surveys page
+      navigate("/surveys");
     } catch (err) {
       alert("Failed to create survey");
     }
@@ -39,7 +47,7 @@ function CreateSurvey() {
 
   return (
     <div className="container mt-4">
-      <h3>Create Survey</h3>
+      <h3 className="page-title mb-4">Create New Survey</h3>
 
       <div className="mb-3">
         <label className="form-label">Survey Title</label>
@@ -47,12 +55,13 @@ function CreateSurvey() {
           className="form-control"
           value={title}
           onChange={e => setTitle(e.target.value)}
+          placeholder="Enter survey title"
         />
       </div>
 
       {questions.map((q, index) => (
-        <div key={index} className="card p-3 mb-3">
-          <h6>Question {index + 1}</h6>
+        <div key={index} className="card shadow p-3 mb-3">
+          <h6 className="mb-3">Question {index + 1}</h6>
 
           <input
             className="form-control mb-2"
@@ -74,13 +83,15 @@ function CreateSurvey() {
         </div>
       ))}
 
-      <button className="btn btn-secondary me-2" onClick={addQuestion}>
-        Add Question
-      </button>
+      <div className="mt-3">
+        <button className="btn btn-outline-secondary me-2" onClick={addQuestion}>
+          + Add Question
+        </button>
 
-      <button className="btn btn-primary" onClick={handleCreateSurvey}>
-        Create Survey
-      </button>
+        <button className="btn btn-primary" onClick={handleCreateSurvey}>
+          Create Survey
+        </button>
+      </div>
     </div>
   );
 }
