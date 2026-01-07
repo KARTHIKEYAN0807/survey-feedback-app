@@ -39,7 +39,7 @@ function CreateSurvey() {
       setQuestions([{ questionText: "", options: "" }]);
 
       // 👉 navigate to surveys page
-      navigate("/surveys");
+      navigate("/dashboard");
     } catch (err) {
       alert("Failed to create survey");
     }
