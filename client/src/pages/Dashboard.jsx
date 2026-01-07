@@ -1,32 +1,28 @@
+import Navbar from "../components/Navbar";
 import CreateSurvey from "./CreateSurvey";
 import SurveyList from "./SurveyList";
 
 function Dashboard() {
-  const logout = () => {
-    localStorage.removeItem("token");
-    window.location.href = "/";
-  };
-
   return (
-    <div className="container mt-4">
-      {/* Header */}
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>Dashboard</h2>
-        <button className="btn btn-danger" onClick={logout}>
-          Logout
-        </button>
+    <>
+      {/* Top Navigation */}
+      <Navbar />
+
+      <div className="container mt-4">
+        <h2 className="page-title mb-4">Dashboard</h2>
+
+        {/* Create Survey Section */}
+        <div className="card shadow section p-4">
+          <h5 className="mb-3">Create New Survey</h5>
+          <CreateSurvey />
+        </div>
+
+        {/* Survey List Section */}
+        <div className="section mt-5">
+          <SurveyList />
+        </div>
       </div>
-
-      {/* Create Survey Section */}
-      <div className="mb-5">
-        <CreateSurvey />
-      </div>
-
-      <hr />
-
-      {/* Survey List Section */}
-      <SurveyList />
-    </div>
+    </>
   );
 }
 
